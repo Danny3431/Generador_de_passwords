@@ -27,21 +27,30 @@ function generar() {
     }
 
     contrasena.value = password;
-    validarFortaleza(password);
+    validarContrasena(password);
     }
 function limpiar() {
     contrasena.value = '';
     mensaje.innerHTML = '';
 }
 
-function validarFortaleza(password) {
-    const contieneMayuscula = /[A-Z]/.test(password);
-    const contieneNumero = /\d/.test(password);
+// Función para validar la fortaleza de la contraseña
+function validarContrasena(contrasena) {
+    const mensaje = document.getElementById('mensaje');
+    
+    // Expresiones regulares para validar
+    const tieneMayuscula = /[A-Z]/.test(contrasena); // Verifica si tiene al menos una letra mayúscula
+    const tieneMinuscula = /[a-z]/.test(contrasena); // Verifica si tiene al menos una letra minúscula
+    const tieneNumero = /\d/.test(contrasena); // Verifica si tiene al menos un número
+    const tieneEspecial = /[!@#$%^&*()_+]/.test(contrasena); // Verifica si tiene al menos un carácter especial
 
-    if (!contieneMayuscula || !contieneNumero) {
-        mensaje.innerHTML = 'La contraseña es débil. Debe contener al menos una letra mayúscula y un número.';
+    // Condiciones para una contraseña fuerte
+    if (tieneMayuscula && tieneMinuscula && tieneNumero && tieneEspecial && contrasena.length >= 8) {
+        mensaje.textContent = "✅ Contraseña fuerte";
+        mensaje.style.color = "green";
     } else {
-        mensaje.innerHTML = '';
+        mensaje.textContent = "⚠️ Contraseña débil: Debe tener al menos una letra mayúscula, una minúscula, un número, y un carácter especial.";
+        mensaje.style.color = "red";
     }
 }
 
